@@ -33,7 +33,7 @@ namespace Labb3Databaser
             collection.InsertOne(SunBakeryTrattoria);
         }
 
-        public void InsertRestauranteData()
+        public void InsertRestaurantsData()
         {
             var restaurants = new List<Restaurant>
             {
@@ -73,7 +73,6 @@ namespace Labb3Databaser
             client.DropDatabase("restaurantsdb");
         }
 
-        // Metod som skriver ut alla dokument i collectionen
         public void PrintAllDocuments()
         {
             var documents = collection.Find(new BsonDocument());
@@ -83,8 +82,6 @@ namespace Labb3Databaser
             }
         }
 
-        // Skriver ut namnet på alla docs med "Cafe" i categories.
-        // Exkluderar _id och endast namn visas
         public void FilterCafes()
         {
             var cafeFilter = Builders<Restaurant>.Filter.Where(r => r.Categories.Contains("Cafe"));
@@ -97,8 +94,6 @@ namespace Labb3Databaser
             }
         }
 
-        // Uppdaterar XYZ Coffee Bar's stars från 5 till 6 med increment
-        // och skriv ut alla restauranger igen.
         public void IncrementStars()
         {
             var filter = Builders<Restaurant>.Filter.Where(r => r.Name == "XYZ Coffee Bar");
@@ -108,10 +103,7 @@ namespace Labb3Databaser
             PrintAllDocuments();
         }
 
-
-        // Uppdaterar "name" för "456 Cookies Shop" till "123 Cookies Heaven"
-        // och skriver ut alla restauranger igen
-        public void ChangeNameCookiesShop()
+        public void ChangeNameOfCookiesShop()
         {
             var filter = Builders<Restaurant>.Filter.Where(r => r.Name.Contains("Cookies"));
             var changeName = Builders<Restaurant>.Update.Set((r => r.Name), "123 Cookies Heaven");
@@ -120,8 +112,6 @@ namespace Labb3Databaser
             PrintAllDocuments();
         }
 
-        // Aggregerar en lista på alla restauranger med 4 eller fler stars.
-        // Endast "name" och "stars" skrivs ut.
         public void AggregateFourOrMoreStars()
         {
             var filter = Builders<Restaurant>.Filter.Where(r => r.Stars >= 4);
